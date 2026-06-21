@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penilaian Penelitian Pendahuluan - Telkom University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons untuk Ikon yang Elegan -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        telkom: {
+                            red: '#E3000F',
+                            dark: '#1F2937',
+                            gray: '#F3F4F6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Sembunyikan panah pada input number untuk tampilan lebih bersih */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        
+        /* Animasi details/summary */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+
+    <main class="max-w-3xl mx-auto">
+        <!-- Header -->
+        <div class="bg-white rounded-t-2xl shadow-sm border border-slate-200 p-6 md:p-8 border-b-4 border-b-telkom-red flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left">
+                <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">NILAI PENELITIAN PENDAHULUAN</h1>
+                <p class="text-sm md:text-base text-slate-500 font-medium mt-1">PROGRAM STUDI S3 INFORMATIKA</p>
+                <p class="text-sm md:text-base text-slate-500 font-medium">UNIVERSITAS TELKOM</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <!-- Simple Logo Mockup for Clean Look -->
+                <div class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-white font-bold text-xl relative overflow-hidden">
+                    <div class="absolute w-full h-1/2 bg-telkom-red bottom-0"></div>
+                    <span class="relative z-10 font-serif">T</span>
+                </div>
+                <div class="font-bold text-lg leading-tight text-slate-800">Telkom<br><span class="font-normal text-slate-600 text-sm">University</span></div>
+            </div>
+        </div>
+
+        <!-- Form Content -->
+        <form id="evaluationForm" class="bg-white rounded-b-2xl shadow-sm border border-slate-200 border-t-0 p-6 md:p-8 space-y-8">
+            
+            <!-- Alert Berhasil (Hidden by default) -->
+            <div id="successAlert" class="hidden bg-green-50 border border-green-200 text-green-800 rounded-xl p-4 flex items-start gap-3">
+                <i class="ph-fill ph-check-circle text-2xl text-green-500 mt-0.5"></i>
+                <div>
+                    <h3 class="font-bold">Berhasil Terkirim!</h3>
+                    <p class="text-sm mt-1">Terima kasih. Hasil penilaian telah berhasil dikirimkan ke sistem.</p>
+                </div>
+            </div>
+
+            <!-- Section: Data Penilai -->
+            <section>
+                <div class="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100">
+                    <i class="ph ph-user-circle text-xl text-telkom-red"></i>
+                    <h2 class="text-lg font-semibold text-slate-800">Data Penilai</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label for="kodeDosen" class="block text-sm font-medium text-slate-700 mb-1.5">Kode Dosen <span class="text-red-500">*</span></label>
+                        <input type="text" id="kodeDosen" required placeholder="Contoh: RAA" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-telkom-red/20 focus:border-telkom-red transition-colors outline-none uppercase">
+                    </div>
+                    <div>
+                        <label for="peran" class="block text-sm font-medium text-slate-700 mb-1.5">Peran <span class="text-red-500">*</span></label>
+                        <select id="peran" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-telkom-red/20 focus:border-telkom-red transition-colors outline-none cursor-pointer">
+                            <option value="Promotor">Promotor</option>
+                            <option value="Kopromotor 1">Kopromotor 1</option>
+                            <option value="Kopromotor 2">Kopromotor 2</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Data Mahasiswa -->
+            <section>
+                <div class="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100">
+                    <i class="ph ph-student text-xl text-telkom-red"></i>
+                    <h2 class="text-lg font-semibold text-slate-800">Data Mahasiswa</h2>
+                </div>
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="md:col-span-1">
+                            <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">NIM</span>
+                            <span class="font-medium text-slate-900">303012510004</span>
+                        </div>
+                        <div class="md:col-span-2">
+                            <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Nama Lengkap</span>
+                            <span class="font-medium text-slate-900">Rolly Maulana Awangga</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="judulPenelitian" class="block text-sm font-medium text-slate-700 mb-1.5">Judul Penelitian <span class="text-red-500">*</span></label>
+                        <textarea id="judulPenelitian" rows="2" required placeholder="Masukkan judul penelitian pendahuluan..." class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-telkom-red/20 focus:border-telkom-red transition-colors outline-none resize-y"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Penilaian -->
+            <section>
+                <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                    <div class="flex items-center gap-2">
+                        <i class="ph ph-clipboard-text text-xl text-telkom-red"></i>
+                        <h2 class="text-lg font-semibold text-slate-800">Komponen Penilaian</h2>
+                    </div>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded font-medium">Skala 10 - 100</span>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- CLO 1 -->
+                    <div class="border border-slate-200 rounded-xl overflow-hidden">
+                        <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                            <div class="font-semibold text-slate-800">CLO 1 <span class="text-sm font-normal text-slate-500 ml-2">(Kajian Pustaka / Literatur Review)</span></div>
+                            <div class="text-sm font-bold text-telkom-red bg-red-50 px-2 py-1 rounded">Bobot: 100%</div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex flex-col md:flex-row md:items-start gap-4">
+                                <div class="flex-1">
+                                    <label for="nilaiLiteratur" class="block text-sm font-medium text-slate-700 mb-1">Nilai Literatur Review</label>
+                                    <details class="group mt-1">
+                                        <summary class="flex items-center gap-1 text-sm text-blue-600 cursor-pointer hover:text-blue-800 transition-colors">
+                                            <i class="ph ph-info mt-0.5"></i> Lihat Rubrik Penilaian
+                                        </summary>
+                                        <div class="mt-3 p-3 bg-blue-50 text-xs text-slate-700 rounded-lg space-y-2 border border-blue-100 leading-relaxed">
+                                            <p><strong class="text-blue-900">85-100:</strong> Sangat terstruktur, mendalam, gap penelitian diidentifikasi sangat jelas.</p>
+                                            <p><strong class="text-blue-900">75-84:</strong> Terstruktur, pemahaman teori baik, gap cukup jelas.</p>
+                                            <p><strong class="text-blue-900">65-74:</strong> Cukup terstruktur, cakupan terbatas, gap kurang mendalam.</p>
+                                            <p><strong class="text-blue-900">0-64:</strong> Tidak terstruktur, pemahaman lemah, gap tidak jelas.</p>
+                                        </div>
+                                    </details>
+                                </div>
+                                <div class="w-full md:w-32 shrink-0">
+                                    <input type="number" id="nilaiLiteratur" min="10" max="100" required placeholder="0-100" class="w-full text-center text-lg font-semibold px-4 py-3 bg-white border-2 border-slate-200 rounded-lg focus:ring-0 focus:border-telkom-red transition-colors outline-none clo1-input">
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center bg-slate-50/50 p-3 rounded-lg">
+                                <span class="text-sm font-medium text-slate-600">Total Nilai CLO 1</span>
+                                <span id="totalClo1" class="text-xl font-bold text-slate-900">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CLO 2 -->
+                    <div class="border border-slate-200 rounded-xl overflow-hidden">
+                        <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                            <div class="font-semibold text-slate-800">CLO 2 <span class="text-sm font-normal text-slate-500 ml-2">(Komunikasi Gagasan & Metode)</span></div>
+                        </div>
+                        <div class="p-5 space-y-6">
+                            
+                            <!-- CLO 2: Metode -->
+                            <div class="flex flex-col md:flex-row md:items-start gap-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <label for="nilaiMetode" class="block text-sm font-medium text-slate-700">Metode dan Desain Eksperimen</label>
+                                        <span class="text-xs font-semibold bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded">Bobot: 40%</span>
+                                    </div>
+                                    <details class="group mt-1">
+                                        <summary class="flex items-center gap-1 text-sm text-blue-600 cursor-pointer hover:text-blue-800 transition-colors">
+                                            <i class="ph ph-info mt-0.5"></i> Lihat Rubrik
+                                        </summary>
+                                        <div class="mt-3 p-3 bg-blue-50 text-xs text-slate-700 rounded-lg space-y-2 border border-blue-100 leading-relaxed">
+                                            <p><strong class="text-blue-900">85-100:</strong> Sangat relevan, sistematis, penyampaian sangat efektif lisan & tulisan.</p>
+                                            <p><strong class="text-blue-900">75-84:</strong> Relevan, sistematis, penyampaian cukup efektif.</p>
+                                            <p><strong class="text-blue-900">65-74:</strong> Cukup relevan, kurang detail, kurang efisien.</p>
+                                            <p><strong class="text-blue-900">0-64:</strong> Tidak relevan, tidak sistematis, penyampaian kurang efektif.</p>
+                                        </div>
+                                    </details>
+                                </div>
+                                <div class="w-full md:w-32 shrink-0">
+                                    <input type="number" id="nilaiMetode" min="10" max="100" required placeholder="0-100" class="w-full text-center text-lg font-semibold px-4 py-3 bg-white border-2 border-slate-200 rounded-lg focus:ring-0 focus:border-telkom-red transition-colors outline-none clo2-input">
+                                </div>
+                            </div>
+
+                            <div class="w-full h-px bg-slate-100"></div>
+
+                            <!-- CLO 2: Analisa -->
+                            <div class="flex flex-col md:flex-row md:items-start gap-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <label for="nilaiAnalisa" class="block text-sm font-medium text-slate-700">Analisa Hasil Eksperimen</label>
+                                        <span class="text-xs font-semibold bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded">Bobot: 60%</span>
+                                    </div>
+                                    <details class="group mt-1">
+                                        <summary class="flex items-center gap-1 text-sm text-blue-600 cursor-pointer hover:text-blue-800 transition-colors">
+                                            <i class="ph ph-info mt-0.5"></i> Lihat Rubrik
+                                        </summary>
+                                        <div class="mt-3 p-3 bg-blue-50 text-xs text-slate-700 rounded-lg space-y-2 border border-blue-100 leading-relaxed">
+                                            <p><strong class="text-blue-900">85-100:</strong> Analisa sangat mendalam, interpretasi jelas, validasi komprehensif.</p>
+                                            <p><strong class="text-blue-900">75-84:</strong> Analisa mendalam, interpretasi jelas, validasi baik.</p>
+                                            <p><strong class="text-blue-900">65-74:</strong> Cukup logis, kurang mendalam, validasi terbatas.</p>
+                                            <p><strong class="text-blue-900">0-64:</strong> Kurang logis/mendalam, interpretasi kurang jelas.</p>
+                                        </div>
+                                    </details>
+                                </div>
+                                <div class="w-full md:w-32 shrink-0">
+                                    <input type="number" id="nilaiAnalisa" min="10" max="100" required placeholder="0-100" class="w-full text-center text-lg font-semibold px-4 py-3 bg-white border-2 border-slate-200 rounded-lg focus:ring-0 focus:border-telkom-red transition-colors outline-none clo2-input">
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center bg-slate-50/50 p-3 rounded-lg">
+                                <span class="text-sm font-medium text-slate-600">Total Nilai CLO 2 <span class="text-xs font-normal">(Metode*40% + Analisa*60%)</span></span>
+                                <span id="totalClo2" class="text-xl font-bold text-slate-900">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Catatan -->
+            <section>
+                <div class="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100">
+                    <i class="ph ph-chat-text text-xl text-telkom-red"></i>
+                    <h2 class="text-lg font-semibold text-slate-800">Catatan Evaluasi</h2>
+                </div>
+                <div>
+                    <textarea id="catatan" rows="4" placeholder="Berikan catatan, masukan, atau perbaikan untuk mahasiswa..." class="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-telkom-red/20 focus:border-telkom-red transition-colors outline-none resize-y"></textarea>
+                    <p class="text-xs text-slate-500 mt-2">Gunakan Enter untuk baris baru. Catatan ini akan dikirimkan bersama nilai.</p>
+                </div>
+            </section>
+
+            <!-- Actions -->
+            <div class="pt-6 border-t border-slate-200">
+                <button type="submit" id="submitBtn" class="w-full sm:w-auto min-w-[200px] flex items-center justify-center gap-2 bg-telkom-red hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-sm focus:ring-4 focus:ring-red-100 outline-none float-right">
+                    <i class="ph ph-paper-plane-tilt text-lg"></i>
+                    <span>Kirim Penilaian</span>
+                </button>
+                <div class="clear-both"></div>
+            </div>
+
+        </form>
+        
+        <footer class="mt-8 text-center text-sm text-slate-400">
+            &copy; <span id="year"></span> Program Studi S3 Informatika - Telkom University
+        </footer>
+    </main>
+
+    <script type="module">
+        // Set Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // DOM Elements
+        const inputLiteratur = document.getElementById('nilaiLiteratur');
+        const inputMetode = document.getElementById('nilaiMetode');
+        const inputAnalisa = document.getElementById('nilaiAnalisa');
+        const totalClo1El = document.getElementById('totalClo1');
+        const totalClo2El = document.getElementById('totalClo2');
+        const form = document.getElementById('evaluationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successAlert = document.getElementById('successAlert');
+
+        // Calculation Logic
+        const calculateScores = () => {
+            // CLO 1
+            const valLit = parseFloat(inputLiteratur.value) || 0;
+            const clo1Final = valLit; // 100%
+            totalClo1El.textContent = clo1Final > 0 ? clo1Final.toFixed(2) : "0.00";
+
+            // CLO 2
+            const valMet = parseFloat(inputMetode.value) || 0;
+            const valAna = parseFloat(inputAnalisa.value) || 0;
+            const clo2Final = (valMet * 0.40) + (valAna * 0.60);
+            totalClo2El.textContent = (valMet > 0 || valAna > 0) ? clo2Final.toFixed(2) : "0.00";
+        };
+
+        // Event Listeners for real-time calculation
+        inputLiteratur.addEventListener('input', calculateScores);
+        inputMetode.addEventListener('input', calculateScores);
+        inputAnalisa.addEventListener('input', calculateScores);
+
+        // Telegram Bot Config
+        const BOT_TOKEN = '8879220879:AAGEHvBcz0-l2q3JnD17I6BpGZcTg-XT3h4';
+        const CHAT_ID = '1454158829';
+
+        // Submit Handler
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validate inputs (ensure within 10-100 logic)
+            const inputs = [inputLiteratur, inputMetode, inputAnalisa];
+            for (let input of inputs) {
+                if(input.value < 0 || input.value > 100) {
+                    alert('Nilai harus berada pada rentang 0 hingga 100.');
+                    input.focus();
+                    return;
+                }
+            }
+
+            // UI Loading state
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="ph ph-spinner animate-spin text-lg"></i> Mengirim...';
+            submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+            successAlert.classList.add('hidden');
+
+            // Gather Data
+            const data = {
+                kodeDosen: document.getElementById('kodeDosen').value.toUpperCase(),
+                peran: document.getElementById('peran').value,
+                nim: "303012510004",
+                nama: "Rolly Maulana Awangga",
+                judul: document.getElementById('judulPenelitian').value,
+                nilaiLiteratur: parseFloat(inputLiteratur.value) || 0,
+                nilaiMetode: parseFloat(inputMetode.value) || 0,
+                nilaiAnalisa: parseFloat(inputAnalisa.value) || 0,
+                totalClo1: totalClo1El.textContent,
+                totalClo2: totalClo2El.textContent,
+                catatan: document.getElementById('catatan').value || "Tidak ada catatan."
+            };
+
+            // Format Message for Telegram (MarkdownV2 format)
+            const message = `
+🎓 *HASIL PENILAIAN PENELITIAN PENDAHULUAN* 🎓
+-----------------------------------------
+👤 *MAHASISWA*
+Nama: ${data.nama}
+NIM: ${data.nim}
+Judul: _${data.judul}_
+
+👨‍🏫 *PENILAI*
+Kode Dosen: *${data.kodeDosen}*
+Peran: ${data.peran}
+
+📊 *RINCIAN NILAI*
+*CLO 1 (Literatur Review):*
+• Nilai Asli: ${data.nilaiLiteratur}
+• *Total CLO 1: ${data.totalClo1}*
+
+*CLO 2 (Komunikasi & Metode):*
+• Metode & Desain (40%): ${data.nilaiMetode}
+• Analisa Hasil (60%): ${data.nilaiAnalisa}
+• *Total CLO 2: ${data.totalClo2}*
+
+📝 *CATATAN EVALUASI:*
+${data.catatan}
+            `.trim();
+
+            // Send to Telegram
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.ok) {
+                    // Success UI update
+                    successAlert.classList.remove('hidden');
+                    form.reset();
+                    calculateScores(); // reset scores to 0
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    throw new Error(result.description);
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert('Gagal mengirim penilaian ke Telegram. Silakan periksa koneksi internet Anda atau hubungi admin.');
+            } finally {
+                // Restore button state
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            }
+        });
+    </script>
+</body>
+</html>
